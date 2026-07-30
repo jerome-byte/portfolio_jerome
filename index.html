@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKOTA Yao Jérôme — Data Scientist & Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #fafaf9; color: #292524; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-stagger .reveal:nth-child(1) { transition-delay: 0ms; }
+        .reveal-stagger .reveal:nth-child(2) { transition-delay: 80ms; }
+        .reveal-stagger .reveal:nth-child(3) { transition-delay: 160ms; }
+        .reveal-stagger .reveal:nth-child(4) { transition-delay: 240ms; }
+        .reveal-stagger .reveal:nth-child(5) { transition-delay: 320ms; }
+        .reveal-stagger .reveal:nth-child(6) { transition-delay: 400ms; }
+        .reveal-stagger .reveal:nth-child(7) { transition-delay: 480ms; }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: #292524;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .project-card {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px -8px rgb(0 0 0 / 0.1);
+        }
+        .project-card:hover .project-arrow {
+            transform: translateX(3px);
+            opacity: 1;
+        }
+        .project-arrow {
+            transform: translateX(-3px);
+            opacity: 0;
+            transition: all 0.25s ease;
+        }
+
+        .skill-tag {
+            transition: all 0.25s ease;
+        }
+        .skill-tag:hover {
+            background: #292524;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 7px;
+            top: 24px;
+            bottom: 0;
+            width: 1.5px;
+            background: linear-gradient(to bottom, #d6d3d1, transparent);
+        }
+        .timeline-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #fafaf9;
+            border: 2px solid #a8a29e;
+            position: relative;
+            z-index: 2;
+            transition: all 0.25s;
+            flex-shrink: 0;
+        }
+        .timeline-item:hover .timeline-dot {
+            border-color: #292524;
+            background: #292524;
+            box-shadow: 0 0 0 4px rgb(41 37 36 / 0.1);
+        }
+
+        .metric-value {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #d6d3d1, transparent);
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgb(168 162 158 / 0.12) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .float-badge {
+            animation: floatBadge 6s ease-in-out infinite;
+        }
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .toast {
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+            body { background: white; }
+            .project-card { break-inside: avoid; }
+        }
+
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #fafaf9; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(250,250,249,0.9); backdrop-filter: blur(12px);">
+        <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+            <a href="#hero" class="font-serif text-lg font-500 tracking-tight text-stone-900">
+                Y.J<span class="text-stone-400">.</span>A
+            </a>
+            <div class="hidden md:flex items-center gap-7">
+                <a href="#apropos" class="nav-link text-[11px] font-medium uppercase tracking-wide text-stone-500 hover:text-stone-900">À propos</a>
+                <a href="#parcours" class="nav-link text-[11px] font-medium uppercase tracking-wide text-stone-500 hover:text-stone-900">Parcours</a>
+                <a href="#projets" class="nav-link text-[11px] font-medium uppercase tracking-wide text-stone-500 hover:text-stone-900">Projets</a>
+                <a href="#competences" class="nav-link text-[11px] font-medium uppercase tracking-wide text-stone-500 hover:text-stone-900">Compétences</a>
+                <a href="#formation" class="nav-link text-[11px] font-medium uppercase tracking-wide text-stone-500 hover:text-stone-900">Formation</a>
+            </div>
+            <a href="CV_AKOTA_Yao_Jerome.pdf" download class="inline-flex items-center gap-2 px-5 py-2.5 border border-stone-200 text-stone-700 text-sm font-medium rounded-full hover:bg-stone-50 transition-all duration-150">
+    <span class="iconify" data-icon="lucide:download" data-width="14"></span>
+    Télécharger le CV(PDF)
+</a>
+        </div>
+        <div id="mobileMenu" class="md:hidden overflow-hidden transition-all duration-300" style="max-height: 0;">
+            <div class="px-6 pb-3 flex flex-col gap-2">
+                <a href="#apropos" class="mobile-link py-1.5 text-sm text-stone-600 hover:text-stone-900">À propos</a>
+                <a href="#parcours" class="mobile-link py-1.5 text-sm text-stone-600 hover:text-stone-900">Parcours</a>
+                <a href="#projets" class="mobile-link py-1.5 text-sm text-stone-600 hover:text-stone-900">Projets</a>
+                <a href="#competences" class="mobile-link py-1.5 text-sm text-stone-600 hover:text-stone-900">Compétences</a>
+                <a href="#formation" class="mobile-link py-1.5 text-sm text-stone-600 hover:text-stone-900">Formation</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="relative min-h-screen flex items-center hero-pattern">
+        <div class="max-w-5xl mx-auto px-6 pt-16 pb-10 w-full">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-stone-200 bg-white/60 mb-6 float-badge">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-500" style="animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></span>
+                        <span class="text-[11px] font-medium text-stone-600">Disponible </span>
+                    </div>
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] font-500 tracking-tight leading-[1.08] text-stone-900 mb-5">
+                        Yao Jérôme<br>
+                        <span class="text-stone-400">Akota</span>
+                    </h1>
+                    <p class="text-[15px] text-stone-700 leading-relaxed max-w-md mb-3">
+                        Je construis des solutions data qui font sens — du premier script de collecte jusqu'au modèle en production.
+                    </p>
+                    <p class="text-sm text-stone-500 mb-7">
+                        Data Science · Data Engineering · Lomé, Togo
+                    </p>
+                    <div class="flex flex-wrap gap-2.5">
+                        <a href="#projets" class="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 text-white text-sm font-medium rounded-full hover:bg-stone-800 transition-all duration-150">
+                            Voir mes projets
+                            <span class="iconify" data-icon="lucide:arrow-down" data-width="14"></span>
+                        </a>
+                        <button onclick="window.print()" class="inline-flex items-center gap-2 px-5 py-2.5 border border-stone-200 text-stone-700 text-sm font-medium rounded-full hover:bg-stone-50 transition-all duration-150">
+                            <span class="iconify" data-icon="lucide:download" data-width="14"></span>
+                            Télécharger le CV
+                        </button>
+                    </div>
+                </div>
+                <div class="reveal" style="transition-delay: 150ms;">
+                    <div class="grid grid-cols-2 gap-3 mb-6">
+                        <div class="p-4 rounded-2xl bg-white border border-stone-200/60">
+                            <div class="metric-value font-serif text-2xl font-500 text-stone-900 mb-0.5" data-target="12" data-suffix="">0</div>
+                            <div class="text-[11px] text-stone-500 font-medium">Cours IBM Data Science</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white border border-stone-200/60">
+                            <div class="metric-value font-serif text-2xl font-500 text-stone-900 mb-0.5" data-target="8" data-suffix="">0</div>
+                            <div class="text-[11px] text-stone-500 font-medium">Projets data réalisés</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white border border-stone-200/60">
+                            <div class="metric-value font-serif text-2xl font-500 text-stone-900 mb-0.5" data-target="97" data-suffix="%">0%</div>
+                            <div class="text-[11px] text-stone-500 font-medium">Meilleur AUC (Scoring)</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white border border-stone-200/60">
+                            <div class="metric-value font-serif text-2xl font-500 text-stone-900 mb-0.5" data-target="94" data-suffix="%">0%</div>
+                            <div class="text-[11px] text-stone-500 font-medium">Précision MNIST (DL)</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a href="https://github.com/jerome-byte" target="_blank" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-stone-200/60 text-stone-600 hover:text-stone-900 hover:border-stone-300 transition-all text-sm">
+                            <span class="iconify" data-icon="mdi:github" data-width="16"></span>
+                            GitHub
+                        </a>
+                        <a href="https://linkedin.com/in/yao-jérôme-akota" target="_blank" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-stone-200/60 text-stone-600 hover:text-stone-900 hover:border-stone-300 transition-all text-sm">
+                            <span class="iconify" data-icon="mdi:linkedin" data-width="16"></span>
+                            LinkedIn
+                        </a>
+                        <a href="https://kaggle.com/yaojrmeakota" target="_blank" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-stone-200/60 text-stone-600 hover:text-stone-900 hover:border-stone-300 transition-all text-sm">
+                            <span class="iconify" data-icon="simple-icons:kaggle" data-width="14"></span>
+                            Kaggle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-stone-400 no-print">
+            <span class="text-[9px] uppercase tracking-widest font-medium">Scroll</span>
+            <div class="w-4 h-7 rounded-full border border-stone-300 flex justify-center pt-1">
+                <div class="w-0.5 h-1.5 rounded-full bg-stone-400" style="animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- À propos -->
+    <section id="apropos" class="py-14 lg:py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="section-divider mb-10"></div>
+            <div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
+                <div class="lg:col-span-2 reveal">
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-stone-400 mb-3 block">À propos</span>
+                    <h2 class="font-serif text-2xl sm:text-[1.7rem] font-500 tracking-tight text-stone-900 leading-snug">
+                        Des maths à la data,<br>une logique continue
+                    </h2>
+                </div>
+                <div class="lg:col-span-3 reveal" style="transition-delay: 120ms;">
+                    <div class="space-y-3 text-stone-700 leading-relaxed text-[14px]">
+                        <p>
+                            Mon parcours a commencé par les mathématiques à l'Université de Lomé  là où j'ai appris à raisonner rigoureusement, à modéliser des problèmes complexes et à ne pas me satisfaire d'une réponse approximative. Cette base solide en statistiques et économétrie est devenue le socle sur lequel j'ai construit mes compétences en data.
+                        </p>
+                        <p>
+                            Aujourd'hui, je navigue confortablement sur tout le pipeline data : je sais scraper des données brutes sur le web, les nettoyer avec méthode, explorer ce qu'elles racontent, puis construire des modèles prédictifs (ML, Deep Learning, NLP) qui apportent une vraie valeur décisionnelle.
+                        </p>
+                        <p>
+                            Ce qui me motive ? Transformer un problème flou en une solution concrète et compréhensible. Je cherche maintenant un <strong class="text-stone-900 font-medium">stage en Data Science ou Data Engineering</strong> pour mettre cette énergie au service d'une équipe.
+                        </p>
+                    </div>
+                    <div class="mt-6 p-4 rounded-xl bg-green-50/80 border border-green-100">
+                        <div class="flex items-start gap-2.5">
+                            <span class="iconify text-green-600 mt-0.5 flex-shrink-0" data-icon="lucide:trophy" data-width="16"></span>
+                            <div>
+                                <p class="text-sm font-medium text-stone-900 mb-0.5">Finaliste du Challenge TECH & SANTÉ 2025-2026</p>
+                                <p class="text-[12px] text-stone-600">Sélectionné par le Ministère de la Santé et du Numérique du Togo pour le développement d'une application de suivi maternel.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parcours -->
+    <section id="parcours" class="py-14 lg:py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="section-divider mb-10"></div>
+            <div class="reveal mb-8">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-stone-400 mb-3 block">Parcours</span>
+                <h2 class="font-serif text-2xl sm:text-[1.7rem] font-500 tracking-tight text-stone-900">
+                    Ce que j'ai déjà construit
+                </h2>
+            </div>
+            <div class="relative pl-7">
+                <div class="timeline-line"></div>
+                <div class="timeline-item relative pb-8 reveal">
+                    <div class="absolute left-[-22px] top-1.5">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="ml-1">
+                        <div class="flex flex-wrap items-center gap-2 mb-2">
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">2025</span>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-white bg-stone-900 px-2 py-0.5 rounded-full">Freelance</span>
+                        </div>
+                        <h3 class="text-base font-medium text-stone-900 mb-1">Application Maternity — Suivi maternel</h3>
+                        <p class="text-[12px] text-stone-500 mb-3">Challenge National Tech-Santé · Ministère de la Santé et du Numérique, Togo</p>
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="text-[10px] font-mono font-medium text-stone-600 bg-stone-50 px-2 py-0.5 rounded">Flutter</span>
+                            <span class="text-[10px] font-mono font-medium text-stone-600 bg-stone-50 px-2 py-0.5 rounded">Node.js</span>
+                            <span class="text-[10px] font-mono font-medium text-stone-600 bg-stone-50 px-2 py-0.5 rounded">PostgreSQL</span>
+                            <span class="text-[10px] font-mono font-medium text-stone-600 bg-stone-50 px-2 py-0.5 rounded">API REST</span>
+                        </div>
+                        <div class="space-y-2 text-[13px] text-stone-700 leading-relaxed">
+                            <p>
+                                J'ai conçu et développé de bout en bout une application web et mobile pour le suivi des patientes enceintes. Côté back-end, API REST en Node.js avec une base PostgreSQL pour gérer les données médicales.
+                            </p>
+                            <p>
+                                Le plus satisfaisant ? Le système d'automatisation que j'ai mis en place  des tâches programmées (cron jobs) qui envoient des SMS et notifications de rappel pour les consultations. Un vrai impact concret sur l'adhérence des bénéficiaires.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projets -->
+    <section id="projets" class="py-14 lg:py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="section-divider mb-10"></div>
+            <div class="reveal mb-3">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-stone-400 mb-3 block">Projets</span>
+                <h2 class="font-serif text-2xl sm:text-[1.7rem] font-500 tracking-tight text-stone-900 mb-1.5">
+                    Ce que les données m'ont appris
+                </h2>
+                <p class="text-[13px] text-stone-600 max-w-lg">Chaque projet est une histoire de données ,de la collecte brut jusqu'à l'insight actionnable.</p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mb-7 reveal" style="transition-delay: 80ms;">
+                <button class="filter-btn active px-3.5 py-1.5 rounded-full text-[11px] font-medium transition-all duration-300" data-filter="all">Tous</button>
+                <button class="filter-btn px-3.5 py-1.5 rounded-full text-[11px] font-medium transition-all duration-300" data-filter="ml">ML / DL</button>
+                <button class="filter-btn px-3.5 py-1.5 rounded-full text-[11px] font-medium transition-all duration-300" data-filter="stats">Stats / Éco</button>
+                <button class="filter-btn px-3.5 py-1.5 rounded-full text-[11px] font-medium transition-all duration-300" data-filter="nlp">NLP</button>
+            </div>
+
+            <div id="projectsGrid" class="grid md:grid-cols-2 gap-4 reveal-stagger">
+
+                <!-- Scoring Crédit -->
+                <div class="project-card project-item bg-white rounded-2xl border border-stone-200/60 p-5 cursor-pointer" data-category="ml" onclick="openProjectModal(0)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center">
+                            <span class="iconify text-stone-700" data-icon="lucide:shield-check" data-width="16"></span>
+                        </div>
+                        <span class="project-arrow iconify text-stone-400" data-icon="lucide:arrow-up-right" data-width="14"></span>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-[15px] mb-0.5">Scoring Crédit</h3>
+                    <p class="text-[11px] text-stone-500 mb-2.5">Prédiction du risque de défaut · 1 000 demandes</p>
+                    <p class="text-[13px] text-stone-700 leading-relaxed mb-3">Régression Logistique vs Random Forest sur un pipeline CRISP-DM complet. La régression l'a emporté avec un AUC de 0,972.</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="text-[10px] font-mono text-stone-500">Python</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Scikit-learn</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Pandas</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-2.5 border-t border-stone-100">
+                        <div><div class="text-base font-serif font-500 text-stone-900">0.972</div><div class="text-[9px] text-stone-500">AUC (Régression Log.)</div></div>
+                        <div class="w-px h-7 bg-stone-100"></div>
+                        <div><div class="text-base font-serif font-500 text-stone-900">41%</div><div class="text-[9px] text-stone-500">Poids endettement</div></div>
+                    </div>
+                </div>
+
+                <!-- Segmentation -->
+                <div class="project-card project-item bg-white rounded-2xl border border-stone-200/60 p-5 cursor-pointer" data-category="stats" onclick="openProjectModal(1)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center">
+                            <span class="iconify text-stone-700" data-icon="lucide:git-branch" data-width="16"></span>
+                        </div>
+                        <span class="project-arrow iconify text-stone-400" data-icon="lucide:arrow-up-right" data-width="14"></span>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-[15px] mb-0.5">Segmentation de Projets</h3>
+                    <p class="text-[11px] text-stone-500 mb-2.5">Clustering · 200 projets de développement</p>
+                    <p class="text-[13px] text-stone-700 leading-relaxed mb-3">Segmentation en 4 familles avec K-Means et classification hiérarchique, validée par ACP et coefficient de silhouette.</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="text-[10px] font-mono text-stone-500">Python</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">K-Means</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">PCA</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-2.5 border-t border-stone-100">
+                        <div><div class="text-base font-serif font-500 text-stone-900">4</div><div class="text-[9px] text-stone-500">Clusters</div></div>
+                        <div class="w-px h-7 bg-stone-100"></div>
+                        <div><div class="text-base font-serif font-500 text-stone-900">86%</div><div class="text-[9px] text-stone-500">Concordance</div></div>
+                    </div>
+                </div>
+
+                <!-- Macro UEMOA -->
+                <div class="project-card project-item bg-white rounded-2xl border border-stone-200/60 p-5 cursor-pointer" data-category="stats" onclick="openProjectModal(2)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center">
+                            <span class="iconify text-stone-700" data-icon="lucide:trending-up" data-width="16"></span>
+                        </div>
+                        <span class="project-arrow iconify text-stone-400" data-icon="lucide:arrow-up-right" data-width="14"></span>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-[15px] mb-0.5">Macroéconomie UEMOA</h3>
+                    <p class="text-[11px] text-stone-500 mb-2.5">Séries temporelles · 8 pays · 2010-2024</p>
+                    <p class="text-[13px] text-stone-700 leading-relaxed mb-3">Analyse des indicateurs macroéconomiques avec modélisation ARIMA pour prévoir la croissance 2025-2028.</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="text-[10px] font-mono text-stone-500">Python</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Statsmodels</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">ARIMA</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-2.5 border-t border-stone-100">
+                        <div><div class="text-base font-serif font-500 text-stone-900">8</div><div class="text-[9px] text-stone-500">Pays</div></div>
+                        <div class="w-px h-7 bg-stone-100"></div>
+                        <div><div class="text-base font-serif font-500 text-stone-900">2028</div><div class="text-[9px] text-stone-500">Prévision</div></div>
+                    </div>
+                </div>
+
+                <!-- Prix Voiture -->
+                <div class="project-card project-item bg-white rounded-2xl border border-stone-200/60 p-5 cursor-pointer" data-category="ml" onclick="openProjectModal(5)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center">
+                            <span class="iconify text-stone-700" data-icon="lucide:car" data-width="16"></span>
+                        </div>
+                        <span class="project-arrow iconify text-stone-400" data-icon="lucide:arrow-up-right" data-width="14"></span>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-[15px] mb-0.5">Estimation des Prix de Voiture</h3>
+                    <p class="text-[11px] text-stone-500 mb-2.5">Régression · Marché de l'occasion · Kaggle</p>
+                    <p class="text-[13px] text-stone-700 leading-relaxed mb-3">Modèle d'estimation des prix de voitures d'occasion par régression linéaire multiple, Ridge et polynomiale ,comparaison pour trouver le meilleur.</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="text-[10px] font-mono text-stone-500">Python</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Scikit-learn</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Régression</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-2.5 border-t border-stone-100">
+                        <div><div class="text-base font-serif font-500 text-stone-900">3</div><div class="text-[9px] text-stone-500">Modèles comparés</div></div>
+                        <div class="w-px h-7 bg-stone-100"></div>
+                        <div><div class="text-base font-serif font-500 text-stone-900">1.5T$</div><div class="text-[9px] text-stone-500">Taille du marché</div></div>
+                    </div>
+                </div>
+
+                <!-- Falcon 9 -->
+                <div class="project-card project-item bg-white rounded-2xl border border-stone-200/60 p-5 cursor-pointer" data-category="ml" onclick="openProjectModal(6)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center">
+                            <span class="iconify text-stone-700" data-icon="lucide:rocket" data-width="16"></span>
+                        </div>
+                        <span class="project-arrow iconify text-stone-400" data-icon="lucide:arrow-up-right" data-width="14"></span>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-[15px] mb-0.5">Prédiction d'Atterrissage Falcon 9</h3>
+                    <p class="text-[11px] text-stone-500 mb-2.5">Classification · SpaceX · IBM Capstone</p>
+                    <p class="text-[13px] text-stone-700 leading-relaxed mb-3">Prédire si le premier étage de la fusée Falcon 9 atterrira avec succès ,un enjeu de 100M$ par lancement pour SpaceX.</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="text-[10px] font-mono text-stone-500">Python</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">SQL</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Classification</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-2.5 border-t border-stone-100">
+                        <div><div class="text-base font-serif font-500 text-stone-900">62M$</div><div class="text-[9px] text-stone-500">Prix SpaceX vs 165M$</div></div>
+                        <div class="w-px h-7 bg-stone-100"></div>
+                        <div><div class="text-base font-serif font-500 text-stone-900">API</div><div class="text-[9px] text-stone-500">Collecte SpaceX</div></div>
+                    </div>
+                </div>
+
+                <!-- NLP Sentiment -->
+                <div class="project-card project-item bg-white rounded-2xl border border-stone-200/60 p-5 cursor-pointer" data-category="nlp" onclick="openProjectModal(3)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center">
+                            <span class="iconify text-stone-700" data-icon="lucide:message-square-text" data-width="16"></span>
+                        </div>
+                        <span class="project-arrow iconify text-stone-400" data-icon="lucide:arrow-up-right" data-width="14"></span>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-[15px] mb-0.5">Analyse de Sentiment</h3>
+                    <p class="text-[11px] text-stone-500 mb-2.5">NLP · Avis Amazon · MITx</p>
+                    <p class="text-[13px] text-stone-700 leading-relaxed mb-3">3 algorithmes linéaires from scratch (Perceptron, Avg Perceptron, Pegasos) pour classifier des avis produits.</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="text-[10px] font-mono text-stone-500">Python</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">NumPy</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Bag-of-Words</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-2.5 border-t border-stone-100">
+                        <div><div class="text-base font-serif font-500 text-stone-900">80.8%</div><div class="text-[9px] text-stone-500">Précision test</div></div>
+                        <div class="w-px h-7 bg-stone-100"></div>
+                        <div><div class="text-base font-serif font-500 text-stone-900">3</div><div class="text-[9px] text-stone-500">Algorithmes</div></div>
+                    </div>
+                </div>
+
+                <!-- MNIST -->
+                <div class="project-card project-item bg-white rounded-2xl border border-stone-200/60 p-5 cursor-pointer" data-category="ml" onclick="openProjectModal(4)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center">
+                            <span class="iconify text-stone-700" data-icon="lucide:scan-text" data-width="16"></span>
+                        </div>
+                        <span class="project-arrow iconify text-stone-400" data-icon="lucide:arrow-up-right" data-width="14"></span>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-[15px] mb-0.5">Reconnaissance MNIST</h3>
+                    <p class="text-[11px] text-stone-500 mb-2.5">Deep Learning · Réseaux de neurones · MITx</p>
+                    <p class="text-[13px] text-stone-700 leading-relaxed mb-3">Du SVM avec PCA (93,6%) au réseau de neurones from scratch (93,99% en validation) , comprendre l'intuition derrière chaque couche.</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="text-[10px] font-mono text-stone-500">Python</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">SVM</span><span class="text-stone-300 text-[10px]">·</span>
+                        <span class="text-[10px] font-mono text-stone-500">Neural Network</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-2.5 border-t border-stone-100">
+                        <div><div class="text-base font-serif font-500 text-stone-900">93.99%</div><div class="text-[9px] text-stone-500">Validation (NN)</div></div>
+                        <div class="w-px h-7 bg-stone-100"></div>
+                        <div><div class="text-base font-serif font-500 text-stone-900">92.05%</div><div class="text-[9px] text-stone-500">Test (NN)</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Compétences -->
+    <section id="competences" class="py-14 lg:py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="section-divider mb-10"></div>
+            <div class="reveal mb-8">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-stone-400 mb-3 block">Compétences</span>
+                <h2 class="font-serif text-2xl sm:text-[1.7rem] font-500 tracking-tight text-stone-900 mb-1.5">
+                    Ma boîte à outils
+                </h2>
+                <p class="text-[13px] text-stone-600 max-w-lg">Ce avec quoi je suis à l'aise et ce que j'apprends activement.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">
+                <div class="reveal p-5 rounded-2xl border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center mb-3">
+                        <span class="iconify text-stone-700" data-icon="lucide:brain" data-width="16"></span>
+                    </div>
+                    <h3 class="text-[13px] font-medium text-stone-900 mb-2.5">Data Science & IA</h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Python</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Scikit-learn</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Pandas</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">NumPy</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Deep Learning</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">NLP</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">R</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Feature Eng.</span>
+                    </div>
+                </div>
+                <div class="reveal p-5 rounded-2xl border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center mb-3">
+                        <span class="iconify text-stone-700" data-icon="lucide:database" data-width="16"></span>
+                    </div>
+                    <h3 class="text-[13px] font-medium text-stone-900 mb-2.5">Data Engineering</h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Web Scraping</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">BeautifulSoup</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Selenium</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">API REST</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Pipelines</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Git</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Automatisation</span>
+                    </div>
+                </div>
+                <div class="reveal p-5 rounded-2xl border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center mb-3">
+                        <span class="iconify text-stone-700" data-icon="lucide:sigma" data-width="16"></span>
+                    </div>
+                    <h3 class="text-[13px] font-medium text-stone-900 mb-2.5">Statistiques & Économétrie</h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Tests d'hypothèses</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Régression</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Séries temporelles</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">ANOVA</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">ARIMA</span>
+                    </div>
+                </div>
+                <div class="reveal p-5 rounded-2xl border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center mb-3">
+                        <span class="iconify text-stone-700" data-icon="lucide:bar-chart-3" data-width="16"></span>
+                    </div>
+                    <h3 class="text-[13px] font-medium text-stone-900 mb-2.5">Visualisation & BI</h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Power BI</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Tableau</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Matplotlib</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Seaborn</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Excel</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Dashboards</span>
+                    </div>
+                </div>
+                <div class="reveal p-5 rounded-2xl border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center mb-3">
+                        <span class="iconify text-stone-700" data-icon="lucide:hard-drive" data-width="16"></span>
+                    </div>
+                    <h3 class="text-[13px] font-medium text-stone-900 mb-2.5">Bases de données</h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">SQL</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">PostgreSQL</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">MySQL</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">SQL Server</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">NoSQL</span>
+                    </div>
+                </div>
+                <div class="reveal p-5 rounded-2xl border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center mb-3">
+                        <span class="iconify text-stone-700" data-icon="lucide:heart-handshake" data-width="16"></span>
+                    </div>
+                    <h3 class="text-[13px] font-medium text-stone-900 mb-2.5">Soft Skills & Langues</h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Curiosité</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Rigueur</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Autonomie</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Esprit d'équipe</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Français C2</span>
+                        <span class="skill-tag text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 text-stone-700 cursor-default">Anglais B1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formation -->
+    <section id="formation" class="py-14 lg:py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="section-divider mb-10"></div>
+            <div class="reveal mb-8">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-stone-400 mb-3 block">Formation</span>
+                <h2 class="font-serif text-2xl sm:text-[1.7rem] font-500 tracking-tight text-stone-900">
+                    Ce qui m'a façonné
+                </h2>
+            </div>
+            <div class="space-y-3.5 reveal-stagger">
+                <div class="reveal group p-5 rounded-2xl bg-white border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="flex flex-col sm:flex-row sm:items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0">
+                            <span class="iconify text-blue-600" data-icon="simple-icons:ibm" data-width="20"></span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                                <h3 class="font-medium text-stone-900 text-[15px]">Certificat Professionnel IBM Data Science</h3>
+                                <span class="text-[9px] font-semibold uppercase tracking-wider text-green-700 bg-green-50 px-2 py-0.5 rounded-full">Terminé</span>
+                            </div>
+                            <p class="text-[11px] text-stone-500 mb-2">IBM · Coursera · 12 cours · Juin 2026 · ID: SQ4W3MIKTLHP</p>
+                            <p class="text-[13px] text-stone-700 leading-relaxed">Formation complète couvrant Python, SQL, analyse de données, visualisation, machine learning, et un projet capstone (Falcon 9). 12 cours qui m'ont donné une vue d'ensemble concrète du métier.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal group p-5 rounded-2xl bg-white border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="flex flex-col sm:flex-row sm:items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center flex-shrink-0">
+                            <span class="iconify text-red-700" data-icon="simple-icons:mit" data-width="20"></span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                                <h3 class="font-medium text-stone-900 text-[15px]">Machine Learning: from Linear Models to Deep Learning</h3>
+                                <span class="text-[9px] font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">En progression</span>
+                            </div>
+                            <p class="text-[11px] text-stone-500 mb-2">MITx · edX · En cours</p>
+                            <p class="text-[13px] text-stone-700 leading-relaxed">Le niveau d'exigence du MIT. Régression, classification, réseaux de neurones, Deep Learning — avec une approche très mathématique. Les projets MNIST et NLP en sont issus.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal group p-5 rounded-2xl bg-white border border-stone-200/60 hover:border-stone-300 transition-all duration-300">
+                    <div class="flex flex-col sm:flex-row sm:items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-stone-50 border border-stone-100 flex items-center justify-center flex-shrink-0">
+                            <span class="iconify text-stone-700" data-icon="lucide:graduation-cap" data-width="20"></span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                                <h3 class="font-medium text-stone-900 text-[15px]">Licence en Mathématiques</h3>
+                                <span class="text-[9px] font-semibold uppercase tracking-wider text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">2022 – 2026</span>
+                            </div>
+                            <p class="text-[11px] text-stone-500 mb-2">Université de Lomé, Togo</p>
+                            <p class="text-[13px] text-stone-700 leading-relaxed">La base de tout. Programmation C, algorithmique, méthodes numériques, statistiques, probabilités , des fondations qui font toute la différence en Machine Learning.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="py-14 lg:py-16 bg-stone-900">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-stone-500 mb-3 block">Contact</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-500 tracking-tight text-white mb-3">
+                    On travaille ensemble ?
+                </h2>
+                <p class="text-stone-400 text-[13px] max-w-md mx-auto mb-8">
+                    Disponible pour travailler sur vos projets en Data Science ou Data Engineering, je suis ouvert à toute opportunité d'emploi ou de collaboration. N'hésitez pas à me contacter , je reste très réactif
+                </p>
+                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                    <a href="mailto:akotayaojerome@gmail.com" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-stone-900 text-[13px] font-medium rounded-full hover:bg-stone-100 transition-all duration-150">
+                        <span class="iconify" data-icon="lucide:mail" data-width="14"></span>
+                        akotayaojerome@gmail.com
+                    </a>
+                    <a href="tel:+22897324256" class="inline-flex items-center gap-2 px-5 py-2.5 border border-stone-700 text-stone-300 text-[13px] font-medium rounded-full hover:bg-stone-800 hover:text-white transition-all duration-150">
+                        <span class="iconify" data-icon="lucide:phone" data-width="14"></span>
+                        +228 97 32 42 56
+                    </a>
+                </div>
+                <div class="flex justify-center gap-4">
+                    <a href="https://github.com/jerome-byte" target="_blank" class="w-9 h-9 rounded-full border border-stone-700 flex items-center justify-center text-stone-400 hover:text-white hover:border-stone-500 transition-all">
+                        <span class="iconify" data-icon="mdi:github" data-width="16"></span>
+                    </a>
+                    <a href="https://linkedin.com/in/yao-jérôme-akota" target="_blank" class="w-9 h-9 rounded-full border border-stone-700 flex items-center justify-center text-stone-400 hover:text-white hover:border-stone-500 transition-all">
+                        <span class="iconify" data-icon="mdi:linkedin" data-width="16"></span>
+                    </a>
+                    <a href="https://kaggle.com/yaojrmeakota" target="_blank" class="w-9 h-9 rounded-full border border-stone-700 flex items-center justify-center text-stone-400 hover:text-white hover:border-stone-500 transition-all">
+                        <span class="iconify" data-icon="simple-icons:kaggle" data-width="14"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-5 bg-stone-900 border-t border-stone-800">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-1.5">
+            <p class="text-[11px] text-stone-600">Adidogomé-Woynomé, Lomé, Togo</p>
+            <p class="text-[11px] text-stone-600"> AKOTA Yao Jérôme © 2025</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="projectModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeProjectModal()"></div>
+        <div class="relative bg-white rounded-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto p-7 transform scale-95 transition-transform duration-300" id="modalContent">
+            <button onclick="closeProjectModal()" class="absolute top-3.5 right-3.5 w-7 h-7 rounded-full bg-stone-50 border border-stone-200 flex items-center justify-center text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition-all">
+                <span class="iconify" data-icon="lucide:x" data-width="13"></span>
+            </button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast fixed bottom-5 right-5 z-[110] px-4 py-2.5 bg-stone-900 text-white text-[12px] rounded-xl flex items-center gap-2" style="box-shadow: 0 20px 40px -8px rgb(0 0 0 / 0.25);">
+        <span class="iconify" data-icon="lucide:check-circle" data-width="14"></span>
+        <span id="toastMessage">Copié !</span>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                title: "Modèle de Scoring Crédit",
+                subtitle: "Prédiction du Risque de Défaut",
+                icon: "lucide:shield-check",
+                tech: ["Python", "Scikit-learn", "Pandas", "Matplotlib"],
+                github: "https://github.com/jerome-byte/Analyse-de-risque-de-cr-dit",
+                content: `<p class="mb-3">J'ai construit un pipeline complet de scoring crédit sur 1 000 demandes synthétiques en suivant la méthodologie CRISP-DM : de l'exploration des données au choix du modèle final.</p>
+                <p class="mb-3">Quand j'ai comparé la Régression Logistique (AUC = 0,972) au Random Forest (AUC = 0,959), c'est le modèle le plus simple qui a gagné — non pas en performances brutes, mais en <strong>discrimination et interprétabilité</strong>. Un rappel que la complexité n'est pas toujours la réponse.</p>
+                <p class="mb-3">L'analyse d'importance des variables a révélé que le <strong>ratio d'endettement</strong> explique à lui seul 41 % de la prédiction — une information directement actionable pour les décideurs.</p>
+                <div class="grid grid-cols-3 gap-2.5 mt-5">
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">0.972</div><div class="text-[9px] text-stone-500 mt-0.5">AUC RL</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">41%</div><div class="text-[9px] text-stone-500 mt-0.5">Endettement</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">1K</div><div class="text-[9px] text-stone-500 mt-0.5">Demandes</div></div>
+                </div>`
+            },
+            {
+                title: "Segmentation du Portefeuille",
+                subtitle: "Clustering de Projets de Développement",
+                icon: "lucide:git-branch",
+                tech: ["Python", "Scikit-learn", "K-Means", "PCA"],
+                github: "https://github.com/jerome-byte/Segmentation-des-projets-de-d-veloppement",
+                content: `<p class="mb-3">Comment organiser 200 projets de développement en familles cohérentes ? J'ai utilisé K-Means et la classification hiérarchique pour trouver 4 segments naturels.</p>
+                <p class="mb-3">L'ACP a été essentielle : avec 59,7 % de variance expliquée sur les composantes principales, j'ai pu visualiser les clusters et valider qu'ils faisaient sens. La méthode du coude et le coefficient de silhouette (0,284) ont confirmé le choix de 4 clusters.</p>
+                <p class="mb-3">Ce qui me rassure : <strong>86 % de concordance</strong> entre les deux méthodes de clustering. Quand deux approches différentes convergent, c'est que le signal est réel.</p>
+                <div class="grid grid-cols-3 gap-2.5 mt-5">
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">4</div><div class="text-[9px] text-stone-500 mt-0.5">Clusters</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">86%</div><div class="text-[9px] text-stone-500 mt-0.5">Concordance</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">59.7%</div><div class="text-[9px] text-stone-500 mt-0.5">Var. ACP</div></div>
+                </div>`
+            },
+            {
+                title: "Analyse Macroéconomique UEMOA",
+                subtitle: "Séries Temporelles & Prévisions ARIMA",
+                icon: "lucide:trending-up",
+                tech: ["Python", "Pandas", "Statsmodels", "ARIMA"],
+                github: "https://github.com/jerome-byte/Analyse-macro-conomique-UEMOA",
+                content: `<p class="mb-3">J'ai analysé les indicateurs macroéconomiques de 8 pays de l'UEMOA sur 14 ans (2010-2024). Tests de normalité (Shapiro-Wilk), comparaison de groupes (Kruskal-Wallis) — chaque test servait une question précise.</p>
+                <p class="mb-3">La partie la plus stimulante : la modélisation ARIMA du PIB agrégé pour prévoir la croissance 2025-2028. J'ai dû décomposer la série, identifier les ordres (p, d, q), et surtout <strong>diagnostiquer les résidus</strong> pour m'assurer que le modèle était valide.</p>
+                <p class="mb-3">Les intervalles de confiance donnent un cadre honnête aux prévisions — on ne prédit pas l'avenir, on l'encadre.</p>
+                <div class="grid grid-cols-3 gap-2.5 mt-5">
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">8</div><div class="text-[9px] text-stone-500 mt-0.5">Pays</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">14</div><div class="text-[9px] text-stone-500 mt-0.5">Années</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">2028</div><div class="text-[9px] text-stone-500 mt-0.5">Prévision</div></div>
+                </div>`
+            },
+            {
+                title: "Analyse de Sentiment",
+                subtitle: "NLP sur Avis Produits Amazon — MITx",
+                icon: "lucide:message-square-text",
+                tech: ["Python", "NumPy", "Bag-of-Words", "From Scratch"],
+                github: "#",
+                content: `<p class="mb-3">Pas de Scikit-learn ici — j'ai implémenté <strong>from scratch</strong> trois algorithmes de classification linéaire : Perceptron classique, Average Perceptron, et Pegasos (SVM stochastique).</p>
+                <p class="mb-3">Le réglage des hyperparamètres a été clé : avec Pegasos (T=25, λ=0,01), j'ai atteint 80,6 % en validation. Mais le vrai gain est venu du <strong>nettoyage du dictionnaire</strong> (suppression des stopwords) qui a fait passer la précision test à 80,8 %.</p>
+                <p class="mb-3">Les mots les plus discriminants — « delicious », « great », « best » — confirment que le modèle a appris quelque chose de sémantiquement cohérent.</p>
+                <div class="grid grid-cols-3 gap-2.5 mt-5">
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">3</div><div class="text-[9px] text-stone-500 mt-0.5">Algorithmes</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">80.8%</div><div class="text-[9px] text-stone-500 mt-0.5">Test préc.</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">0</div><div class="text-[9px] text-stone-500 mt-0.5">Lib. ML</div></div>
+                </div>`
+            },
+            {
+                title: "Reconnaissance MNIST",
+                subtitle: "ML & Deep Learning — MITx",
+                icon: "lucide:scan-text",
+                tech: ["Python", "Scikit-learn", "PCA", "SVM", "Neural Network"],
+                github: "#",
+                content: `<p class="mb-3">Un projet en deux temps. D'abord, une approche classique : réduction de dimension par PCA puis classification par SVM à noyaux. Meilleur résultat : <strong>93,6 % avec un noyau RBF</strong> sur seulement 10 composantes principales.</p>
+                <p class="mb-3">Ensuite, j'ai construit un réseau de neurones from scratch — chaque couche, chaque fonction d'activation, chaque backprop implémentée à la main. Résultat : 93,99 % en validation, 92,05 % en test.</p>
+                <p class="mb-3">L'écart entre validation et test (≈2 points) m'a appris quelque chose d'important sur la généralisation. Le SVM avec PCA reste compétitif avec beaucoup moins de complexité — une leçon d'humilité.</p>
+                <div class="grid grid-cols-3 gap-2.5 mt-5">
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">93.99%</div><div class="text-[9px] text-stone-500 mt-0.5">Val. (NN)</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">92.05%</div><div class="text-[9px] text-stone-500 mt-0.5">Test (NN)</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">10</div><div class="text-[9px] text-stone-500 mt-0.5">Composantes</div></div>
+                </div>`
+            },
+            {
+                title: "Estimation des Prix de Voiture d'Occasion",
+                subtitle: "Régression · Marché automobile · Kaggle",
+                icon: "lucide:car",
+                tech: ["Python", "Scikit-learn", "Régression Linéaire", "Ridge", "Polynomiale"],
+                github: "https://www.kaggle.com/code/yaojrmeakota/analyse-predictive-des-prix-de-voiture/",
+                content: `<p class="mb-3">Le marché des voitures d'occasion pèse 1 200 milliards de dollars et devrait dépasser 1 500 milliards d'ici 2027. Un modèle de prix fiable aide aussi bien les vendeurs que les acheteurs à prendre des décisions éclairées.</p>
+                <p class="mb-3">J'ai développé trois modèles de régression — <strong>linéaire multiple, Ridge et polynomiale</strong> — en suivant un pipeline complet : exploration des variables, prétraitement, ingénierie des features, puis entraînement et évaluation.</p>
+                <p class="mb-3">L'intérêt du projet est dans la comparaison : chaque modèle a ses forces. La régression Ridge aide à gérer la multicolinéarité, tandis que la polynomiale capture les relations non-linéaires — mais au prix d'un risque de surapprentissage qu'il faut surveiller.</p>
+                <div class="grid grid-cols-3 gap-2.5 mt-5">
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">3</div><div class="text-[9px] text-stone-500 mt-0.5">Modèles</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">1.5T$</div><div class="text-[9px] text-stone-500 mt-0.5">Marché</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">3.2%</div><div class="text-[9px] text-stone-500 mt-0.5">CAGR</div></div>
+                </div>`
+            },
+            {
+                title: "Prédiction d'Atterrissage Falcon 9",
+                subtitle: "Classification · SpaceX · IBM Capstone",
+                icon: "lucide:rocket",
+                tech: ["Python", "SQL", "API REST", "Classification", "Scikit-learn"],
+                github: "https://github.com/jerome-byte/Rapport-de-projet-de-capstone-en-science-de-donnes",
+                content: `<p class="mb-3">SpaceX lance la Falcon 9 à 62 millions de dollars, contre plus de 165 millions pour les concurrents. L'économie repose sur un point clé : <strong>la réutilisation du premier étage</strong>. Si on peut prédire s'il atterrira, on peut estimer le coût réel d'un lancement.</p>
+                <p class="mb-3">C'est le projet capstone de ma formation IBM. J'ai collecté les données via l'API SpaceX et le web scraping, structuré une base SQL, puis entraîné plusieurs modèles de classification pour prédire le succès de l'atterrissage.</p>
+                <p class="mb-3">Ce projet m'a fait travailler sur un cas d'usage réel avec un vrai enjeu financier — une autre entreprise pourrait utiliser ce modèle pour faire une offre compétitive à SpaceX.</p>
+                <div class="grid grid-cols-3 gap-2.5 mt-5">
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">62M$</div><div class="text-[9px] text-stone-500 mt-0.5">Prix SpaceX</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">165M$</div><div class="text-[9px] text-stone-500 mt-0.5">Concurrents</div></div>
+                    <div class="text-center p-2.5 bg-stone-50 rounded-xl"><div class="font-serif text-lg font-500 text-stone-900">API</div><div class="text-[9px] text-stone-500 mt-0.5">Collecte</div></div>
+                </div>`
+            }
+        ];
+
+        function openProjectModal(index) {
+            const p = projects[index];
+            const modal = document.getElementById('projectModal');
+            const content = document.getElementById('modalContent');
+            const body = document.getElementById('modalBody');
+            body.innerHTML = `
+                <div class="w-9 h-9 rounded-lg bg-stone-50 border border-stone-100 flex items-center justify-center mb-3">
+                    <span class="iconify text-stone-700" data-icon="${p.icon}" data-width="16"></span>
+                </div>
+                <h3 class="font-serif text-lg font-500 text-stone-900 mb-0.5">${p.title}</h3>
+                <p class="text-[11px] text-stone-500 mb-3">${p.subtitle}</p>
+                <div class="flex flex-wrap gap-1.5 mb-5">
+                    ${p.tech.map(t => `<span class="text-[10px] font-mono font-medium text-stone-600 bg-stone-50 px-2 py-0.5 rounded">${t}</span>`).join('')}
+                </div>
+                <div class="text-[13px] text-stone-700 leading-relaxed">${p.content}</div>
+                ${p.github !== '#' ? `<a href="${p.github}" target="_blank" class="inline-flex items-center gap-1.5 mt-5 text-[11px] font-medium text-stone-500 hover:text-stone-900 transition-colors">
+                    <span class="iconify" data-icon="${p.github.includes('kaggle') ? 'simple-icons:kaggle' : 'mdi:github'}" data-width="13"></span>
+                    ${p.github.includes('kaggle') ? 'Voir sur Kaggle' : 'Voir le code sur GitHub'}
+                    <span class="iconify" data-icon="lucide:external-link" data-width="11"></span>
+                </a>` : `<p class="mt-5 text-[11px] text-stone-400 italic">lien disponible unique sur cv</p>`}
+            `;
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('pointer-events-auto', 'opacity-100');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('projectModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            content.classList.remove('scale-100');
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProjectModal(); });
+
+        // Filter tabs
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.project-item').forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = '';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(8px)';
+                        setTimeout(() => { item.style.display = 'none'; }, 250);
+                    }
+                });
+                styleFilterBtns();
+            });
+        });
+
+        function styleFilterBtns() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.classList.contains('active')) {
+                    btn.style.background = '#292524';
+                    btn.style.color = '#ffffff';
+                } else {
+                    btn.style.background = '#f5f5f4';
+                    btn.style.color = '#78716c';
+                }
+            });
+        }
+        styleFilterBtns();
+
+        // Scroll reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Counter animation
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target);
+                    const suffix = el.dataset.suffix || '';
+                    let current = 0;
+                    const step = Math.max(1, Math.floor(target / 35));
+                    const interval = setInterval(() => {
+                        current += step;
+                        if (current >= target) { current = target; clearInterval(interval); }
+                        el.textContent = current + suffix;
+                    }, 28);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.metric-value[data-target]').forEach(el => counterObserver.observe(el));
+
+        // Navbar border on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.style.borderBottom = window.scrollY > 60 ? '1px solid rgb(214 211 209 / 0.5)' : 'none';
+        });
+
+        // Active nav link
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.scrollY >= section.offsetTop - 80) current = section.getAttribute('id');
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+            });
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+        mobileMenuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.style.maxHeight = menuOpen ? '250px' : '0';
+        });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => { menuOpen = false; mobileMenu.style.maxHeight = '0'; });
+        });
+
+        // Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+    </script>
+</body>
+</html>
